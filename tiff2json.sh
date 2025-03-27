@@ -10,7 +10,7 @@ find "./HiRes2" -type f -name "*.tif" | grep "/202503" | while read -r tif_file;
     cycle=$(basename $outputpath)
     cycle_parsed=${cycle%00}
     
-    outputpath_daily=$outputpath/polygon
+    outputpath_daily=$outputpath/polygon/daily
     mkdir -p $outputpath_daily
     outputpath_hourly=$outputpath/polygon/hourly
     mkdir -p $outputpath_hourly
