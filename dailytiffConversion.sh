@@ -1,12 +1,13 @@
 #!/bin/bash
 
-# Find all .nc files under the current working directory(where script is executed)
-find "." -type f -name "*.nc" | grep "/202503" | while read -r nc_file; do
 
-    # Run gdal_translate command
+# Find all .nc files under the current working directory(where script is executed)
+todaycycle_folder=$(ls -d HiResX/202* | sort -r | head -n 1)
+find "./${todaycycle_folder}" -type f -name "*.nc" | while read -r nc_file; do
+
     filename=${nc_file##*/}
     cycle=$(basename "$(dirname "$(dirname "$nc_file")")")
-    cycle_parsed=${cycle%00}   # Strip the trailing zeros (e.g., 20250320)
+    cycle_parsed=${cycle%00}
     tmr=$(date --date=$cycle_parsed'+1 day' +'%Y%m%d')
     tmrtmr=$(date --date=$tmr'+1 day' +'%Y%m%d')
     outputpath="./HiRes2/$cycle/geotiff"
@@ -80,5 +81,5 @@ find "." -type f -name "*.nc" | grep "/202503" | while read -r nc_file; do
             rm -f $outputpath/hourly/hiresx4_raster.${cycle}Z.O3_B.$((i-1)).notReprojected.tif
         done
     fi
-done
 
+done
