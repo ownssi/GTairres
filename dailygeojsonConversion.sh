@@ -1,4 +1,7 @@
 #!/bin/bash
+source $HOME/miniconda3/bin/activate
+conda activate gdal
+cd "$(dirname "$0")"
 
 # Find all tif files under HiRes2 directory
 todaycycle_folder=$(ls -d HiRes2/202* | sort -r | head -n 1)

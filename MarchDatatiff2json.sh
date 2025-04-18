@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Find all .nc files under the base directory
-find "./HiRes2" -type f -name "*.tif" | grep "/202503" | while read -r tif_file; do
+# Find all .nc files under the base directory. Edit grep to a certain date you want to convert
+find "./HiRes2" -type f -name "*.tif" | grep "/20250330" | while read -r tif_file; do
 
     filename=${tif_file##*/}
     outputpath=$(dirname "$(dirname "$(dirname "$tif_file")")")
@@ -25,9 +25,9 @@ find "./HiRes2" -type f -name "*.tif" | grep "/202503" | while read -r tif_file;
     
     
     if [[ $hourly_daily == "hourly" ]]; then
-        gdal_polygonize $tif_file $outputpath_hourly/${conus_hires}_polygon.${cycle_parsed}Z.${variable_name}.${tstep}.geojson
+        gdal_polygonize.py $tif_file $outputpath_hourly/${conus_hires}_polygon.${cycle_parsed}Z.${variable_name}.${tstep}.geojson
     elif [[ $hourly_daily == "daily" ]]; then
-        gdal_polygonize $tif_file $outputpath_daily/${conus_hires}_polygon.${cycle_parsed}Z.${variable_name}.${tstep}.geojson
+        gdal_polygonize.py $tif_file $outputpath_daily/${conus_hires}_polygon.${cycle_parsed}Z.${variable_name}.${tstep}.geojson
     
     fi
 done
